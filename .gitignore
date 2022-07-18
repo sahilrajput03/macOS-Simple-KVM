@@ -2,3 +2,5 @@
 BaseSystem.img
 BaseSystem.dmg
 BaseSystem.chunklist
+MyDisk.qcow2
+OVMF_VARS-1024x768.fd
