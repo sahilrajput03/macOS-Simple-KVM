@@ -11,29 +11,29 @@ OVMF=$VMDIR/firmware
 # export QEMU_AUDIO_DRV=pa		# `pa` means pulseaudio imo
 #QEMU_AUDIO_DRV=pa
 
-sudo qemu-system-x86_64 \
-    -enable-kvm \
-    -m 6G \
-    -machine q35,accel=kvm \
-    -smp 4,cores=4 \
-    -cpu Penryn,vendor=GenuineIntel,kvm=on,+sse3,+sse4.2,+aes,+xsave,+avx,+xsaveopt,+xsavec,+xgetbv1,+avx2,+bmi2,+smep,+bmi1,+fma,+movbe,+invtsc \
-    -device isa-applesmc,osk="$OSK" \
-    -smbios type=2 \
-    -drive if=pflash,format=raw,readonly=on,file="$OVMF/OVMF_CODE.fd" \
-    -drive if=pflash,format=raw,file="$OVMF/OVMF_VARS-1024x768.fd" \
-    -vga qxl \
-    -device ich9-intel-hda -device hda-output \
-    -usb -device usb-kbd -device usb-mouse \
-	-usb -device usb-ehci -device usb-host,hostbus=0,hostaddr=4 \
-    -netdev user,id=net0 \
-    -device e1000-82545em,netdev=net0,id=net0,mac=52:54:00:c9:18:27 \
-    -device ich9-ahci,id=sata \
-    -drive id=ESP,if=none,format=qcow2,file=ESP.qcow2 \
-    -device ide-hd,bus=sata.2,drive=ESP \
-    -drive id=InstallMedia,format=raw,if=none,file=BaseSystem.img \
-    -device ide-hd,bus=sata.3,drive=InstallMedia \
-    -drive id=SystemDisk,if=none,file=MyDisk.qcow2 \
-    -device ide-hd,bus=sata.4,drive=SystemDisk \
+args=(
+    -enable-kvm
+    -m 6G
+    -machine q35,accel=kvm
+    -smp 4,cores=4
+    -cpu Penryn,vendor=GenuineIntel,kvm=on,+sse3,+sse4.2,+aes,+xsave,+avx,+xsaveopt,+xsavec,+xgetbv1,+avx2,+bmi2,+smep,+bmi1,+fma,+movbe,+invtsc
+    -device isa-applesmc,osk="$OSK"
+    -smbios type=2
+    -drive if=pflash,format=raw,readonly=on,file="$OVMF/OVMF_CODE.fd"
+    -drive if=pflash,format=raw,file="$OVMF/OVMF_VARS-1024x768.fd"
+    -vga qxl
+    -device ich9-intel-hda -device hda-output
+    -usb -device usb-kbd -device usb-mouse
+	-usb -device usb-ehci -device usb-host,hostbus=0,hostaddr=4
+    -netdev user,id=net0
+    -device e1000-82545em,netdev=net0,id=net0,mac=52:54:00:c9:18:27
+    -device ich9-ahci,id=sata
+    -drive id=ESP,if=none,format=qcow2,file=ESP.qcow2
+    -device ide-hd,bus=sata.2,drive=ESP
+    -drive id=InstallMedia,format=raw,if=none,file=BaseSystem.img
+    -device ide-hd,bus=sata.3,drive=InstallMedia
+    -drive id=SystemDisk,if=none,file=MyDisk.qcow2
+    -device ide-hd,bus=sata.4,drive=SystemDisk
     # -vga none \
     # -device pcie-root-port,bus=pcie.0,multifunction=on,port=1,chassis=1,id=port.1 \
     # -device vfio-pci,host=00:02.0,bus=port.1,multifunction=on \
@@ -56,6 +56,12 @@ sudo qemu-system-x86_64 \
 	# -audiodev alsa,id=snd0,out.buffer-length=500000,out.period-length=726 \
 	# added below two lines ~Sahil, following from official install instructions.
 	########################
+	)
+
+# INSPIRED FOR THIS WAY OF PASSING ARGUMENTS FROM AN ARRAY IS FROM: https://github.com/kholia/OSX-KVM/blob/master/OpenCore-Boot.sh
+# REASON: We can have comments in between the arguments now!! (LERAN: Using `\ ` in the end of arguments we can't use comments inbetween else the arguments following the # will not be passed to cli.
+qemu-system-x86_64 "${args[@]}"
+
 
 ########## IMPLEMENTING webcam support(took 3 hrs IMO)
 # ADDED below line to support webcam on line:21
