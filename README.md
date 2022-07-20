@@ -3,10 +3,11 @@
 > TODO: READ (Passthrough GPU and sound card so sound and mic may start working): [passthrough-gpu-sahil.md](passthrough-gpu-sahil.md)
 > TODO: I think with a (2 US DOLLAR) Usb Sound card thing I can attach sound + microphone to the macos, yo as he uses it [here](https://github.com/kholia/OSX-KVM/blob/master/OpenCore-Boot.sh#L40-L41)
 
+![image](https://user-images.githubusercontent.com/31458531/179983164-b39a45bf-2220-40aa-bf05-c0493a4bbb81.png)
+
 > I have modified `basic.sh` file only (which is used to lauch clover i.e., Boot Loader for macos). `basic.sh` is used to install macos and as well as for booting the installed macos on our disk.
 > Source: [github.com/foxlet/macOS-Simple-KVM.git](https://github.com/foxlet/macOS-Simple-KVM.git)
 > ~Sahil
-
 
 # macOS-Simple-KVM
 Documentation to set up a simple macOS VM in QEMU, accelerated by KVM.
