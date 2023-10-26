@@ -1,3 +1,7 @@
+## Update - 27 Oct, 2023
+
+I use using this - https://github.com/notAperson535/OneClick-macOS-Simple-KVM, and it was working pretty fine. Thanks. (it was taking 31GB of my ssd so i deleted the folder totally).
+
 #### FROM Sahil
 
 > TODO: READ (Passthrough GPU and sound card so sound and mic may start working): [passthrough-gpu-sahil.md](passthrough-gpu-sahil.md)
